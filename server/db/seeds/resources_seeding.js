@@ -2,9 +2,13 @@ exports.seed = async function(knex) {
     // Deletes ALL existing entries
     await knex('resources').del()
     await knex('resources').insert([
-        {category: 'food', name: 'FoodUniteBank', description: 'Provides shelter for homeless individuals. Located at 123 Main Street, Anytown, USA. Contact John Doe at johndoe@example.com or +1 (555) 123-4567.'
+        {
+        category: 'food', 
+         name: 'FoodUniteBank',
+         description: 'Provides shelter for homeless individuals. Located at 123 Main Street, Anytown, USA. Contact John Doe at johndoe@example.com or +1 (555) 123-4567.'
         },
-        {category: 'Clothing',
+        {
+         category: 'Clothing',
           name: 'Threads of Hope',
           description: 'Accepts and distributes gently used clothing, shoes, and accessories. Located at 789 Elm Street, Anystate, USA. Contact Sarah Johnson at sarahjohnson@example.com or +1 (555) 321-7890.'
         },
