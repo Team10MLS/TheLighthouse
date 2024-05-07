@@ -3,17 +3,16 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-    return knex.schema.createTable('organizations', (table) => {
+    return knex.schema.createTable('categories', (table) => {
         table.increments();
-        table.string('name').notNullable().unique();
-        table.timestamps(true, true);
+        table.string('name').notNullable();
     })
-};
+}
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-    knex.schema.dropTable('organizations');
+    knex.schema.dropTable('categories');
 };
