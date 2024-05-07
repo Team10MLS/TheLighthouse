@@ -6,6 +6,7 @@ exports.up = function (knex) {
     return knex.schema.createTable('organizations', (table) => {
         table.increments();
         table.string('name').notNullable().unique();
+        table.timestamps(true, true);
     })
 };
 
@@ -13,4 +14,6 @@ exports.up = function (knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = (knex) => knex.schema.dropTable('organizations');
+exports.down = function (knex) {
+    knex.schema.dropTable('organizations');
+};

@@ -7,9 +7,12 @@ exports.up = (knex) => {
     table.increments();
     table.string('username').notNullable().unique();
     table.string('password_hash').notNullable();
+    table.integer('organization_id').unsigned().notNullable();
+    table.foreign('organization_id').references('id').inTable('organizations');
     table.timestamps(true, true);
   })
 };
+
 
 /**
  * @param { import("knex").Knex } knex
