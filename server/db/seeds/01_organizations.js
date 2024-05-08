@@ -5,11 +5,8 @@
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
   await knex('organizations').del()
-  await knex('users').del()
 
   await knex.raw('ALTER SEQUENCE organizations_id_seq RESTART WITH 1');
-  await knex.raw('ALTER SEQUENCE users_id_seq RESTART WITH 1');
-
 
   await knex('organizations').insert([
     {name: 'Soup Kitchen'},
@@ -17,11 +14,5 @@ exports.seed = async function(knex) {
     {name: 'Care for the Homeless'},
     {name: 'Grace Church in New York'},
     {name: 'East River Shelter'},
-  ])
-
-  await knex('users').insert([
-    {username: 'cool_cat', password_hash: '1234', organization_id: 1},
-    {username: 'l33t-guy', password_hash: '1234', organization_id: 2},
-    {username: 'wowow', password_hash: '1234', organization_id: 3},
   ]);
 };
