@@ -6,7 +6,6 @@ exports.up = function (knex) {
     return knex.schema.createTable('organizations', (table) => {
         table.increments();
         table.string('name').notNullable().unique();
-        table.timestamps(true, true);
     })
 };
 
@@ -15,5 +14,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-    knex.schema.dropTable('organizations');
+  return knex.schema.dropTable('organizations');
 };
