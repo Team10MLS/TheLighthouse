@@ -13,3 +13,4 @@ exports.seed = async function(knex) {
       { organization_id: organizations[4].id, category: 'Donation', name: 'GiveBack Foundation', description: 'Raises funds for providing education to underprivileged children.' },
   ]);
 };
+
