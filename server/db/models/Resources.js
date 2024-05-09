@@ -17,6 +17,14 @@ class Resources {
     return new Resources(resource);
   }
 
+  static async update({id, category, name, description}) {
+    const query = `UPDATE resources SET category = ?, name = ?, description = ? WHERE id = ? RETURNING *`;
+
+    const {rows} = await knex.raw(query, [category, name, description, id]);
+    const resource = rows[0];
+    return new Resources(resource);
+}
+
   static async delete({id}) {
     const query = `DELETE FROM resources WHERE id = ? RETURNING *`;
 
