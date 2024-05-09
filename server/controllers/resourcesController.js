@@ -8,6 +8,14 @@ exports.createResource = async (req, res) => {
   res.send(resource);
 }
 
+exports.deleteResource = async (req, res) => {
+  const { id } = req.params;
+
+  const resource = await Resources.delete({ id });
+
+  res.send(resource);
+}
+
 exports.listResources = async (req, res) => {
   const resources = await Resources.listAll();
   res.send(resources);
