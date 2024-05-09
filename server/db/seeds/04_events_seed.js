@@ -14,3 +14,4 @@ exports.seed = async function (knex) {
     { organization_id: organizations[4].id, user_id: users[1].id, event: 'Volunteer Orientation', date: '2024-09-05', time: '12:00:00', location: '321 Maple Road' },
   ]);
 };
+
