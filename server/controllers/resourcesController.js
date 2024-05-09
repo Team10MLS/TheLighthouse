@@ -8,6 +8,15 @@ exports.createResource = async (req, res) => {
   res.send(resource);
 }
 
+exports.updateResource = async (req, res) => {
+  const { id } = req.params;
+  const { category, name, description } = req.body;
+
+  const resource = await Resources.update({ id, category, name, description });
+
+  res.send(resource);
+}
+
 exports.deleteResource = async (req, res) => {
   const { id } = req.params;
 
