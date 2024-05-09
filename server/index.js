@@ -21,6 +21,12 @@ app.use('/api/users', userRouter);
 
 // Requests meant for the API will be sent along to the router.
 // For all other requests, send back the index.html file in the dist folder.
+// This allows the frontend to handle the routing.
+////////////////////////
+// Endpoints
+////////////////////////
+
+
 app.get('*', (req, res, next) => {
   if (req.originalUrl.startsWith('/api')) return next();
   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
