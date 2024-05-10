@@ -48,7 +48,12 @@ class Resources {
     return rows.map((resource) => new Resources(resource));
   }
 
+  static async listResourcesByCategory(category) {
+    const query = `SELECT * FROM resources WHERE category = ?`;
 
+    const {rows} = await knex.raw(query,[category]);
+    return rows.map((resource) => new Resources(resource));
+  }
 }
 
 module.exports = Resources;
