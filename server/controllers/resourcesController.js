@@ -36,3 +36,10 @@ exports.listResourcesForOrganization = async (req, res) => {
   const resources = await Resources.listResourcesForOrganization(organization_id);
   res.send(resources);
 }
+
+exports.listResourcesByCategory = async (req, res) => {
+  const { category } = req.params;
+
+  const resources = await Resources.listResourcesByCategory(category);
+  res.send(resources);
+}
