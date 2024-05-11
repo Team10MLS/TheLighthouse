@@ -2,7 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema.createTable('resources', (table) => {
     table.increments();
     table.integer('organization_id').unsigned().notNullable();
@@ -10,13 +10,13 @@ exports.up = function(knex) {
     table.string('category').notNullable();
     table.string('name').notNullable();
     table.string('description').notNullable();
-  })
+  });
 };
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTable('resources');
 };
