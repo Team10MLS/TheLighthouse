@@ -59,14 +59,14 @@ class User {
       SET username=?
       WHERE id=?
       RETURNING *
-    `
-    const { rows } = await knex.raw(query, [username, id])
+    `;
+    const { rows } = await knex.raw(query, [username, id]);
     const updatedUser = rows[0];
     return updatedUser ? new User(updatedUser) : null;
-  };
+  }
 
   static async deleteAll() {
-    return knex('users').del()
+    return knex('users').del();
   }
 }
 
