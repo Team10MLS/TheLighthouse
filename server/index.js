@@ -10,7 +10,7 @@ const {
   listResourcesForOrganization,
 } = require('./controllers/resourcesController');
 
-const {createUser, listUsers, showUser, updateUser,} = require('./controllers/userControllers');
+const { createUser, listUsers, showUser, updateUser, } = require('./controllers/userControllers');
 
 const handleCookieSessions = require('./middleware/handleCookieSessions');
 const logRoutes = require('./middleware/logRoutes');
