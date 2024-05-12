@@ -45,6 +45,9 @@ class User {
     // hash the plain-text password using bcrypt before storing it in the database
     const passwordHash = await authUtils.hashPassword(password);
 
+    console.log('hashing the password', password);
+    console.log('hashed password:', passwordHash);
+
     const query = `INSERT INTO users (username, password_hash)
       VALUES (?, ?) RETURNING *`;
     const { rows } = await knex.raw(query, [username, passwordHash]);
