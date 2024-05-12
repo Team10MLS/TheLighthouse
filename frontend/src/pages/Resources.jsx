@@ -1,7 +1,11 @@
 import { createResource, updateResource } from "../adapters/resource-adapter";
 import { getAllPostsAndResources, createPost, updatePost, deletePost } from "../adapters/post-adapter";
 import { useState, useEffect } from "react";
+import ContributeModal from "../components/contributeModal";
 import { useNavigate } from "react-router-dom"; // if we need to navigate to category page
+
+const categories = ['Shelters', 'Food', 'Clothing', 'Medical Services', 'Support Groups', 'Donations & Fundraisings'];
+
 
 
 export default function ResourcesPage() {
@@ -19,6 +23,10 @@ export default function ResourcesPage() {
   
   return (
     <>
+      {categories.map(category => (
+        <button key={category}>{category}</button>
+      ))}
+      <ContributeModal />
       {data.posts.map(post => (
         <div key={post.id}>
           <h2>{post.title}</h2>

@@ -1,6 +1,6 @@
 // Need to import the HeroSection component into HomePage.jsx and render it.
 
-import HeroSection from "../components/heroSection";
+import HeroSection from "../components/HeroSection";
 
 export default function HomePage() {
   return <>
