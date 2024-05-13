@@ -9,18 +9,18 @@ export default function SiteHeadingAndNav() {
     <a id='logo' href='/'>The Lighthouse</a>
     <nav>
       <ul>
-        <li><NavLink className="nav-button" to='/'>Home</NavLink></li>
-        <li><NavLink className="nav-button" to='/resources'>Resources</NavLink></li>
+        <li><NavLink className="red-button" to='/'>Home</NavLink></li>
+        <li><NavLink className="red-button" to='/resources'>Resources</NavLink></li>
 
         {
           currentUser
             ? <>
-              <li><NavLink className="nav-button" to='/users' end={true}>Users</NavLink></li>
-              <li><NavLink className="nav-button" to={`/users/${currentUser.id}`}>{currentUser.username}</NavLink></li>
+              <li><NavLink className="red-button" to='/users' end={true}>Users</NavLink></li>
+              <li><NavLink className="red-button" to={`/users/${currentUser.id}`}>{currentUser.username}</NavLink></li>
             </>
             : <>
-              <li><NavLink className="nav-button" to='/login'>Login</NavLink></li>
-              <li><NavLink className="nav-button" to='/sign-up'>Sign Up</NavLink></li>
+              <li><NavLink className="red-button" to='/login'>Login</NavLink></li>
+              <li><NavLink className="red-button" to='/sign-up'>Sign Up</NavLink></li>
             </>
         }
       </ul>
