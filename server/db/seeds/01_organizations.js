@@ -4,6 +4,9 @@
  */
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
+  await knex('resources').del();
+  await knex('events').del();
+  await knex('users').del();
   await knex('organizations').del();
 
   await knex.raw('ALTER SEQUENCE organizations_id_seq RESTART WITH 1');
