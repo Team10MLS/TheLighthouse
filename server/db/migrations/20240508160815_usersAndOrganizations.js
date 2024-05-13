@@ -11,7 +11,7 @@ exports.up = function (knex) {
       table.increments();
       table.string('username').notNullable().unique();
       table.string('password_hash').notNullable();
-      table.integer('organization_id').unsigned().notNullable();
+      table.integer('organization_id').unsigned().nullable();
       table.foreign('organization_id').references('id').inTable('organizations');
     });
 };
