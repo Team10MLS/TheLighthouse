@@ -27,7 +27,7 @@ export default function ContributeModal() {
 
   return (
     <>
-      <button onClick={openDialog}>Contribute</button>
+      <button className='red-button' onClick={openDialog}>Contribute</button>
       <dialog ref={dialogRef}>
         <form onSubmit={handleSubmit}>
           <input type="number" name="organization_id" placeholder="Organization ID" onChange={handleFieldChange} required />

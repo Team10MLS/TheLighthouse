@@ -61,7 +61,7 @@ form {
   font-style: italic;
 }
 
-.nav-button {
+.red-button {
   display: inline-block;
   padding: 10px 20px;
   text-decoration: none;
@@ -71,8 +71,22 @@ form {
   transition: background-color 0.3s ease;
 }
 
-.nav-button:hover {
+.red-button:hover {
   background-color: #d4002f
+}
+
+.black-button {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--primary-gray);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.black-button:hover {
+  background-color: #434343
 }
 
 .hero-section {
@@ -95,16 +109,3 @@ form {
   max-width: 500px;
 }
 
-.join-now-button {
-  display: inline-block;
-  padding: 0.5em 1em;
-  background-color: var(--secondary-red);
-  color: white;
-  text-decoration: none;
-  border-radius: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.join-now-button:hover {
-  background-color: #d4002f;
-}

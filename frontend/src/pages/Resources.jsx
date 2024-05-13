@@ -28,7 +28,7 @@ export default function ResourcesPage() {
   return (
     <>
       {categories.map(category => (
-        <button key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
+        <button className="black-button" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
       ))}
       <ContributeModal />
       {data.posts.map(post => (
