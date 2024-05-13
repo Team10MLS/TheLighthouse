@@ -7,6 +7,11 @@ export const getAllResources = async () => {
   return resources || [];
 }
 
+export const getAllResourcesBycategory = async (category) => {
+  const [resources] = await fetchHandler(`${baseUrl}/resources/category/${category}`);
+  return resources || [];
+}
+
 export const createResource = async ({ organization_id, category, name, description }) => (
   fetchHandler(`${baseUrl}/resources`, getPostOptions({ organization_id, category, name, description }))
 );
