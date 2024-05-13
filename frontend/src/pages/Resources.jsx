@@ -1,7 +1,7 @@
 import { createResource, updateResource } from "../adapters/resource-adapter";
 import { getAllPostsAndResources, createPost, updatePost, deletePost } from "../adapters/post-adapter";
 import { useState, useEffect } from "react";
-import ContributeModal from "../components/contributeModal";
+import ContributeModal from "../components/ContributeModal";
 import { useNavigate } from "react-router-dom"; // if we need to navigate to category page
 
 const categories = ['Shelters', 'Food', 'Clothing', 'Medical Services', 'Support Groups', 'Donations & Fundraisings'];
@@ -13,14 +13,14 @@ export default function ResourcesPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const {post: posts, resource: resources} = await getAllPostsAndResources();
+      const { post: posts, resource: resources } = await getAllPostsAndResources();
       setData({ posts, resources });
     };
 
     fetchData();
   }
-  , []);
-  
+    , []);
+
   return (
     <>
       {categories.map(category => (
