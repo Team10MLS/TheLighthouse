@@ -66,7 +66,7 @@ export default function SignUpPage() {
 
       <button>Sign Up Now!</button>
     </form>
-    { !!errorText && <p>{errorText}</p> }
+    {!!errorText && <p>{errorText}</p>}
     <p>Already have an account with us? <Link to="/login">Log in!</Link></p>
   </>;
 }

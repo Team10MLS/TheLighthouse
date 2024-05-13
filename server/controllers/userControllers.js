@@ -1,15 +1,34 @@
 const { isAuthorized } = require('../utils/auth-utils');
 const User = require('../db/models/User');
+const { hashPassword } = require('../utils/auth-utils');
+
 
 exports.createUser = async (req, res) => {
   const { username, password } = req.body;
 
   // TODO: check if username is taken, and if it is what should you return?
-  const user = await User.create(username, password);
-  req.session.userId = user.id;
+  // if username is taken
+  try {
+    // Check if username is taken
+    const existingUser = await User.findByUsername(username);
+    if (existingUser) {
+      return res.status(400).send({ message: 'Username is already taken.' });
+    }
 
-  res.send(user);
+    // Hash the password before storing it in the database
+    const hashedPassword = await hashPassword(password);
+
+    // Create the user with the hashed password
+    const user = await User.create(username, hashedPassword);
+    req.session.userId = user.id;
+
+    res.send(user);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).send({ message: 'Internal server error.' });
+  }
 };
+
 
 exports.listUsers = async (req, res) => {
   const users = await User.list();
@@ -35,6 +54,6 @@ exports.updateUser = async (req, res) => {
   if (!isAuthorized(id, req.session)) return res.sendStatus(403);
 
   const updatedUser = await User.update(id, username);
-  if (!updatedUser) return res.sendStatus(404)
+  if (!updatedUser) return res.sendStatus(404);
   res.send(updatedUser);
 };
