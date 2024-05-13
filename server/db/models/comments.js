@@ -1,6 +1,7 @@
 const knex = require('../knex');
 
 class Comment {
+    
     constructor({ id, postId, userId, text, timeStamp }) {
         this.id = id;
         this.postId = postId;
