@@ -7,7 +7,7 @@ export const getAllResources = async () => {
   return resources || [];
 }
 
-export const getAllResourcesBycategory = async (category) => {
+export const getAllResourcesByCategory = async (category) => {
   const [resources] = await fetchHandler(`${baseUrl}/resources/category/${category}`);
   return resources || [];
 }
