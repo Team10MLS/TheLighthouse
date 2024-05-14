@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import CurrentUserContext from "../contexts/current-user-context";
 import { createUser } from "../adapters/user-adapter";
+import { getAllOrganizations } from "../adapters/org-adapter";
 
 // Controlling the sign up form is a good idea because we want to add (eventually)
 // more validation and provide real time feedback to the user about usernames and passwords
@@ -11,29 +12,43 @@ export default function SignUpPage() {
   const [errorText, setErrorText] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [organizationId, setOrganizationId] = useState(null);
+  const [organizations, setOrganizations] = useState([]);
   // We could also use a single state variable for the form data:
   // const [formData, setFormData] = useState({ username: '', password: '' });
   // What would be the pros and cons of that?
 
   if (currentUser) return <Navigate to="/" />;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setErrorText('');
-    if (!username || !password) return setErrorText('Missing username or password');
 
-    const [user, error] = await createUser({ username, password });
-    if (error) return setErrorText(error.message);
-
-    setCurrentUser(user);
-    navigate('/');
+// To grab our organization names, we need to fetch them from the server
+useEffect(() => {
+  const fetchOrganizations = async () => {
+    const orgs = await getAllOrganizations();
+    setOrganizations(orgs);
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    if (name === 'username') setUsername(value);
-    if (name === 'password') setPassword(value);
-  };
+  fetchOrganizations();
+}, []);
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  setErrorText('');
+  if (!username || !password) return setErrorText('Missing username or password');
+
+  const [user, error] = await createUser({ username, password, organization_id: organizationId });
+  if (error) return setErrorText(error.message);
+
+  setCurrentUser(user);
+  navigate('/');
+};
+
+const handleChange = (event) => {
+  const { name, value } = event.target;
+  if (name === 'username') setUsername(value);
+  if (name === 'password') setPassword(value);
+  if (name === 'organization') setOrganizationId(value);
+};
 
   return <>
     <h1>Sign Up</h1>
@@ -48,6 +63,14 @@ export default function SignUpPage() {
         onChange={handleChange}
         value={username}
       />
+
+      <label htmlFor="organization">Organization</label>
+      <select id="organization" name="organization">
+        <option value="">Select an organization</option>
+        {organizations.map((org) => (
+          <option key={org.id} value={org.id}>{org.name}</option>
+        ))}
+      </select>
 
       <label htmlFor="password">Password</label>
       <input
