@@ -48,12 +48,24 @@ class User {
     console.log('hashing the password', password);
     console.log('hashed password:', passwordHash);
 
-    const query = `INSERT INTO users (username, password_hash, organization_id)
-      VALUES (?, ?, ?) RETURNING *`;
-    const { rows } = await knex.raw(query, [username, passwordHash, organization_id]);
+    let query;
+    let values;
+
+    if (organization_id !== undefined) {
+      // organization is optional, so we need to check if it was provided or sql will try to force it
+        query = `INSERT INTO users (username, password_hash, organization_id)
+            VALUES (?, ?, ?) RETURNING *`;
+        values = [username, passwordHash, organization_id];
+    } else {
+        query = `INSERT INTO users (username, password_hash)
+            VALUES (?, ?) RETURNING *`;
+        values = [username, passwordHash];
+    }
+
+    const { rows } = await knex.raw(query, values);
     const user = rows[0];
     return new User(user);
-  }
+}
 
   // this is an instance method that we can use to update
   static async update(id, username) { // dynamic queries are easier if you add more properties
