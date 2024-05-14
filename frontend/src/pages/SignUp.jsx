@@ -56,7 +56,7 @@ const handleChange = (event) => {
   return <>
     <h1>Sign Up</h1>
     <form onSubmit={handleSubmit} onChange={handleChange} aria-labelledby="create-heading">
-      <h2 id="create-heading">Create New User</h2>
+      <h2 id="create-heading">Create An Account</h2>
       <label htmlFor="username">Username</label>
       <input
         autoComplete="off"
