@@ -17,7 +17,6 @@ export default function LoginPage() {
     // if (error) return setErrorText(error.message);
     // setCurrentUser(user);
     // navigate(`/users/${user.id}`);
-
     try {
       const user = await logUserIn(userData);
       setCurrentUser(user);
