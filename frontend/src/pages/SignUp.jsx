@@ -14,6 +14,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [organizationId, setOrganizationId] = useState(null);
   const [organizations, setOrganizations] = useState([]);
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   // We could also use a single state variable for the form data:
   // const [formData, setFormData] = useState({ username: '', password: '' });
   // What would be the pros and cons of that?
@@ -35,6 +36,7 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   setErrorText('');
   if (!username || !password) return setErrorText('Missing username or password');
+  if (password !== passwordConfirm) return setErrorText('Passwords do not match');
 
   const [user, error] = await createUser({ username, password, organization_id: organizationId });
   if (error) return setErrorText(error.message);
@@ -48,6 +50,7 @@ const handleChange = (event) => {
   if (name === 'username') setUsername(value);
   if (name === 'password') setPassword(value);
   if (name === 'organization') setOrganizationId(value);
+  if (name === 'passwordConfirm') setPasswordConfirm(value);
 };
 
   return <>
@@ -82,12 +85,22 @@ const handleChange = (event) => {
         value={password}
       />
 
+      <label htmlFor="password-confirm">Confirm Password</label>
+      <input 
+        autoComplete="off" 
+        type="password" 
+        id="password-confirm" 
+        name="passwordConfirm" 
+        onChange={handleChange} 
+        value={passwordConfirm} 
+      />
+
       {/* In reality, we'd want a LOT more validation on signup, so add more things if you have time
         <label htmlFor="password-confirm">Password Confirm</label>
         <input autoComplete="off" type="password" id="password-confirm" name="passwordConfirm" />
       */}
 
-      <button>Sign Up Now!</button>
+      <button type="submit">Sign Up</button>
     </form>
     {!!errorText && <p>{errorText}</p>}
     <p>Already have an account with us? <Link to="/login">Log in!</Link></p>
