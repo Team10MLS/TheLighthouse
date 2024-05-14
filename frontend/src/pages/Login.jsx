@@ -12,13 +12,24 @@ export default function LoginPage() {
     event.preventDefault();
     setErrorText('');
     const formData = new FormData(event.target);
-    const [user, error] = await logUserIn(Object.fromEntries(formData));
-    if (error) return setErrorText(error.message);
-    setCurrentUser(user);
-    navigate(`/users/${user.id}`);
+    const userData = Object.fromEntries(formData);
+    // const [user, error] = await logUserIn(Object.fromEntries(formData));
+    // if (error) return setErrorText(error.message);
+    // setCurrentUser(user);
+    // navigate(`/users/${user.id}`);
+
+    try {
+      const user = await logUserIn(userData);
+      setCurrentUser(user);
+
+      navigate(`/users/${user.id}`); // Redirect to user profile page
+    } catch (error) {
+      setErrorText(error.message);
+    }
+
   };
 
-  if (currentUser) return <Navigate to="/" />;
+  // if (currentUser) return <Navigate to="/" />;
 
   return <>
     <h1>Login</h1>
@@ -32,6 +43,6 @@ export default function LoginPage() {
 
       <button>Log in!</button>
     </form>
-    { !!errorText && <p>{errorText}</p> }
+    {!!errorText && <p>{errorText}</p>}
   </>;
 }
