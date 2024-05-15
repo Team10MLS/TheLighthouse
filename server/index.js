@@ -10,6 +10,7 @@ const userRouter = require('./routers/userRouter');
 const resourceRouter = require('./routers/resourceRouter');
 const postRouter = require('./routers/postRouter');
 const orgRouter = require('./routers/orgRouter');
+const commentRouter = require('./routers/commentRouter');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/users', userRouter);
 app.use('/api/resources', resourceRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/orgs', orgRouter);
+app.use('/api/comments', commentRouter);
 
 // Requests meant for the API will be sent along to the router.
 // For all other requests, send back the index.html file in the dist folder.

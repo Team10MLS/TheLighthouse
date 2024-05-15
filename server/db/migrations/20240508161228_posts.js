@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.increments('id').primary();
     table.integer('user_id').unsigned().references('id').inTable('users');
     table.integer('resource_id').unsigned().references('id').inTable('resources');
-    table.specificType('comment_ids', 'integer[]');
+    table.string('title');
     table.string('body');
   });
 };
