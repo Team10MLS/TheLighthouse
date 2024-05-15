@@ -3,12 +3,14 @@ import { getAllPostsAndResources, createPost, updatePost, deletePost } from "../
 import { useState, useEffect } from "react";
 import ContributeModal from "../components/ContributeModal";
 import { useNavigate } from "react-router-dom"; // if we need to navigate to category page
+import PostForm from "../components/PostForm";
 
 const categories = ['Shelters', 'Food', 'Clothing', 'Medical Services', 'Support Groups', 'Donations & Fundraisings'];
 
 
 export default function ResourcesPage() {
   const [data, setData] = useState({ posts: [], resources: [] });
+
 
   const handleCategoryClick = async (category) => {
     const resources = await getAllResourcesByCategory(category);
@@ -22,8 +24,18 @@ export default function ResourcesPage() {
     };
 
     fetchData();
-  }
-    , []);
+  }, []);
+
+  const handlePostSubmit = async (postData) => {
+    // Create the post
+    const newPost = await createPost(postData);
+
+    // Update the state to include the new post
+    setData(prevData => ({
+      ...prevData,
+      posts: [...prevData.posts, newPost]
+    }));
+  };
 
   return (
     <>
@@ -31,7 +43,9 @@ export default function ResourcesPage() {
         <button className="black-button" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
       ))}
       <ContributeModal />
-      
+      {/* Render the PostForm component */}
+      <PostForm onSubmit={handlePostSubmit} />
+      {/* Render existing posts */}
       {data.posts.map(post => (
         <div key={post.id}>
           <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
@@ -47,4 +61,3 @@ export default function ResourcesPage() {
     </>
   );
 }
-

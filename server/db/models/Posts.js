@@ -52,6 +52,11 @@ class Posts {
     const { rows } = await knex.raw(query, [post_id]);
     return rows.map((comment) => new Comments(comment));
   }
+
 }
+
+
+
+
 
 module.exports = Posts;

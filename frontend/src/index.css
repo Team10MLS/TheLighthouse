@@ -15,13 +15,16 @@ body {
   margin: 0;
 }
 
-input, label {
+input,
+label {
   display: block;
+
 }
 
 input {
   margin-bottom: 1rem;
 }
+
 
 header {
   display: flex;
@@ -112,4 +115,3 @@ form {
   width: 100%;
   max-width: 500px;
 }
-
