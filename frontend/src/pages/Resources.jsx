@@ -31,15 +31,16 @@ export default function ResourcesPage() {
         <button className="black-button" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
       ))}
       <ContributeModal />
+      
       {data.posts.map(post => (
         <div key={post.id}>
-          <h2>{post.title}</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
           <p>{post.body}</p>
         </div>
       ))}
       {data.resources.map(resource => (
         <div key={resource.id}>
-          <h2>{resource.name}</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
           <p>{resource.description}</p>
         </div>
       ))}
