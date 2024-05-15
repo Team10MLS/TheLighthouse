@@ -11,6 +11,7 @@ export const createPost = async ({ user_id, title, body }) => (
   fetchHandler(`${baseUrl}/posts`, getPostOptions({ user_id, title, body }))
 );
 
+
 export const updatePost = async ({ id, title, body }) => (
   fetchHandler(`${baseUrl}/posts/${id}`, getPatchOptions({ title, body }))
 );
