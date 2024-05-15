@@ -2,6 +2,11 @@ import { fetchHandler, getPostOptions, deleteOptions } from "../utils";
 
 const baseUrl = '/api';
 
+export const getUserId = async () => {
+  const { user_id } = await fetchHandler(`${baseUrl}/me`);
+  return user_id;
+}
+
 export const checkForLoggedInUser = async () => {
   const [data] = await fetchHandler(`${baseUrl}/me`);
   return data;
