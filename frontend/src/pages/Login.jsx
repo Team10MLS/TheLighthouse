@@ -15,6 +15,7 @@ export default function LoginPage() {
     const [user, error] = await logUserIn(Object.fromEntries(formData));
     if (error) return setErrorText(error.message);
     setCurrentUser(user);
+    console.log('What user looks like',user);
     navigate(`/users/${user.id}`);
   };
 
