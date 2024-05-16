@@ -10,6 +10,16 @@ const categories = ['Shelters', 'Food', 'Clothing', 'Medical Services', 'Support
 
 export default function ResourcesPage() {
   const [data, setData] = useState({ posts: [], resources: [] });
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredData = {
+    posts: data.posts.filter(post => post.title.includes(searchTerm) || post.body.includes(searchTerm)),
+    resources: data.resources.filter(resource => resource.name.includes(searchTerm) || resource.description.includes(searchTerm))
+  };
 
 
   const handleCategoryClick = async (category) => {
@@ -37,22 +47,25 @@ export default function ResourcesPage() {
     }));
   };
 
+  // ... other code
+
   return (
     <>
+    <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange}/>
       {categories.map(category => (
         <button className="black-button" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
       ))}
       <ContributeModal />
       {/* Render the PostForm component */}
       <PostForm onSubmit={handlePostSubmit} />
-      {/* Render existing posts */}
-      {data.posts.map(post => (
+
+      {filteredData.posts.map(post => (
         <div key={post.id}>
           <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
           <p>{post.body}</p>
         </div>
       ))}
-      {data.resources.map(resource => (
+      {filteredData.resources.map(resource => (
         <div key={resource.id}>
           <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
           <p>{resource.description}</p>

@@ -53,6 +53,8 @@ class Resources {
     const { rows } = await knex.raw(query, [category]);
     return rows.map((resource) => new Resources(resource));
   }
+
+  
 }
 
 module.exports = Resources;
