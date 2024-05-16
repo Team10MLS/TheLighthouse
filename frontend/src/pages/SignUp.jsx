@@ -11,10 +11,13 @@ export default function SignUpPage() {
   const [errorText, setErrorText] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedOrganizations, setSelectedOrganizations ] = useState('')
+  const [organizations, setOrganizations] = useState([])
   // We could also use a single state variable for the form data:
   // const [formData, setFormData] = useState({ username: '', password: '' });
   // What would be the pros and cons of that?
 
+ 
   if (currentUser) return <Navigate to="/" />;
 
   const handleSubmit = async (event) => {
