@@ -1,24 +1,26 @@
 import { createResource, updateResource, getAllResources, getAllResourcesByCategory } from "../adapters/resource-adapter";
 import { getAllPostsAndResources, createPost, updatePost, deletePost, getUser } from "../adapters/post-adapter";
 import { useState, useEffect } from "react";
-import ContributeModal from "../components/contributeModal";
+import ContributeModal from "../components/ContributeModal";
 import { useNavigate } from "react-router-dom"; // if we need to navigate to category page
+import PostForm from "../components/PostForm";
 
 const categories = ['Shelters', 'Food', 'Clothing', 'Medical Services', 'Support Groups', 'Donations & Fundraisings'];
 
 
 export default function ResourcesPage() {
   const [data, setData] = useState({ posts: [], resources: [] });
-  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchData = async () => {
-    const { post: posts, resource: resources } = await getAllPostsAndResources();
-    setData({ posts, resources });
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
   };
 
-  const handleResetResources = () => {
-    fetchData();
+  const filteredData = {
+    posts: data.posts.filter(post => post.title.includes(searchTerm) || post.body.includes(searchTerm)),
+    resources: data.resources.filter(resource => resource.name.includes(searchTerm) || resource.description.includes(searchTerm))
   };
+
 
   const handleCategoryClick = async (category) => {
     setSelectedCategory(category);
@@ -27,33 +29,51 @@ export default function ResourcesPage() {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      const { post: posts, resource: resources } = await getAllPostsAndResources();
+      setData({ posts, resources });
+    };
+
     fetchData();
-  }
-  , []);
-  
+  }, []);
+
+  const handlePostSubmit = async (postData) => {
+    // Create the post
+    const newPost = await createPost(postData);
+
+    // Update the state to include the new post
+    setData(prevData => ({
+      ...prevData,
+      posts: [...prevData.posts, newPost]
+    }));
+  };
+
+  // ... other code
+
   return (
     <>
+    <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange}/>
       {categories.map(category => (
         <button className="black-button" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
       ))}
       <ContributeModal />
-      {selectedCategory && <h2> Category: {selectedCategory}</h2>}
-      <button onClick={handleResetResources}>Reset Resources</button>
-      {data.posts.map(post => (
+      {/* Render the PostForm component */}
+      <PostForm onSubmit={handlePostSubmit} />
+
+      {filteredData.posts.map(post => (
         <div key={post.id}>
-          <h2>{post.title}</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
           <p>{post.body}</p>
           {post.user && <p>Posted by: {post.user.name}</p>} 
       
         </div>
       ))}
-      {data.resources.map(resource => (
+      {filteredData.resources.map(resource => (
         <div key={resource.id}>
-          <h2>{resource.name}</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
           <p>{resource.description}</p>
         </div>
       ))}
     </>
   );
 }
-

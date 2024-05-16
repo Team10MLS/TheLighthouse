@@ -35,9 +35,15 @@ class Posts {
 
   static async listAll() {
     const query = `SELECT * FROM posts`;
-
+  
     const { rows } = await knex.raw(query, []);
-    return rows.map((post) => new Posts(post));
+    const posts = rows.map((post) => new Posts(post));
+  
+    for (let post of posts) {
+      post.comments = await this.listCommentsForPost(post.id);
+    }
+  
+    return posts;
   }
 
   static async listCommentsForPost(post_id) {
@@ -46,6 +52,11 @@ class Posts {
     const { rows } = await knex.raw(query, [post_id]);
     return rows.map((comment) => new Comments(comment));
   }
+
 }
+
+
+
+
 
 module.exports = Posts;

@@ -1,10 +1,9 @@
 const { isAuthorized } = require('../utils/auth-utils');
 const User = require('../db/models/User');
-const { hashPassword } = require('../utils/auth-utils');
 
 
 exports.createUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, organization_id } = req.body;
 
   // TODO: check if username is taken, and if it is what should you return?
   // if username is taken
@@ -15,11 +14,7 @@ exports.createUser = async (req, res) => {
       return res.status(400).send({ message: 'Username is already taken.' });
     }
 
-    // Hash the password before storing it in the database
-    const hashedPassword = await hashPassword(password);
-
-    // Create the user with the hashed password
-    const user = await User.create(username, hashedPassword);
+    const user = await User.create(username, password, organization_id);
     req.session.userId = user.id;
 
     res.send(user);
