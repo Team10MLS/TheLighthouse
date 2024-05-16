@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { createPost } from '../adapters/post-adapter';
+import CurrentUserContext from '../contexts/current-user-context';
 
-export default function PostForm({ userId, onPostCreated }) {
+export default function PostForm() {
+    const { currentUser } = useContext(CurrentUserContext);
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!currentUser) {
+            console.error('No current user');
+            return;
+        }
         try {
             // Create the post
-            const newPost = await createPost({ user_id: userId, title, body });
-            // Pass the new post to the parent component
-            onPostCreated(newPost);
+            await createPost({ user_id: currentUser.id, title, body });
             // Clear the form fields
             setTitle('');
             setBody('');
