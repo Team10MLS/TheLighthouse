@@ -7,7 +7,6 @@ import PostForm from "../components/PostForm";
 
 const categories = ['Shelters', 'Food', 'Clothing', 'Medical Services', 'Support Groups', 'Donations & Fundraisings'];
 
-
 export default function ResourcesPage() {
   const [data, setData] = useState({ posts: [], resources: [] });
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,7 +19,6 @@ export default function ResourcesPage() {
     posts: data.posts.filter(post => post.title.includes(searchTerm) || post.body.includes(searchTerm)),
     resources: data.resources.filter(resource => resource.name.includes(searchTerm) || resource.description.includes(searchTerm))
   };
-
 
   const handleCategoryClick = async (category) => {
     const resources = await getAllResourcesByCategory(category);
@@ -47,30 +45,46 @@ export default function ResourcesPage() {
     }));
   };
 
-  // ... other code
-
   return (
     <>
-    <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange}/>
+      <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange} />
       {categories.map(category => (
         <button className="black-button" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
       ))}
-      <ContributeModal />
-      {/* Render the PostForm component */}
-      <PostForm onSubmit={handlePostSubmit} />
 
-      {filteredData.posts.map(post => (
-        <div key={post.id}>
-          <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
-          <p>{post.body}</p>
-        </div>
-      ))}
-      {filteredData.resources.map(resource => (
-        <div key={resource.id}>
-          <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
-          <p>{resource.description}</p>
-        </div>
-      ))}
+      {/* Contribute Modal Section */}
+      <div className="modal-section">
+        <h2>Contribute</h2>
+        <ContributeModal />
+      </div>
+
+      {/* PostForm Section */}
+      <div className="post-form-section">
+        <h2>Create Post</h2>
+        <PostForm onSubmit={handlePostSubmit} />
+      </div>
+
+      {/* Display Posts */}
+      <div className="posts-section">
+        <h2>Posts SECTION-----------------------------------------------------</h2>
+        {filteredData.posts.map(post => (
+          <div key={post.id}>
+            <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
+            <p>{post.body}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Display Resources */}
+      <div className="resources-section">
+        <h2>Resources SECTION-----------------------------------------------------</h2>
+        {filteredData.resources.map(resource => (
+          <div key={resource.id}>
+            <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
+            <p>{resource.description}</p>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
