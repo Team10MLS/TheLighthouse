@@ -54,13 +54,11 @@ export default function ResourcesPage() {
 
       {/* Contribute Modal Section */}
       <div className="modal-section">
-        <h2>Contribute</h2>
         <ContributeModal />
       </div>
 
       {/* PostForm Section */}
       <div className="post-form-section">
-        <h2>Create Post</h2>
         <PostForm onSubmit={handlePostSubmit} />
       </div>
 
