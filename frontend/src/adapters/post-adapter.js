@@ -7,6 +7,7 @@ export const getAllPostsAndResources = async () => {
   return posts || [];
 }
 
+
 export const createPost = async ({ user_id, title, body }) => (
   fetchHandler(`${baseUrl}/posts`, getPostOptions({ user_id, title, body }))
 );
