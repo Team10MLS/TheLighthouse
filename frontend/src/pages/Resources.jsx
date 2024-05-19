@@ -1,9 +1,9 @@
 import { createResource, updateResource, getAllResources, getAllResourcesByCategory } from "../adapters/resource-adapter";
 import { getAllPostsAndResources, createPost, updatePost, deletePost } from "../adapters/post-adapter";
-import { createComment, listCommentsForPost } from "../adapters/comment-adapter";
+import { createComment, listCommentsForPost } from "../adapters/comment-adapter"; // Correct import
 import { useState, useEffect } from "react";
 import ContributeModal from "../components/ContributeModal";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // if we need to navigate to category page
 import PostForm from "../components/PostForm";
 
 const categories = ['Shelters', 'Food', 'Clothing', 'Medical Services', 'Support Groups', 'Donations & Fundraisings'];
@@ -13,6 +13,7 @@ export default function ResourcesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [commentText, setCommentText] = useState('');
   const [showCommentBox, setShowCommentBox] = useState({}); // Track visibility of comment boxes by post ID
+  const [showComments, setShowComments] = useState({}); // Track visibility of comments by post ID
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -58,6 +59,10 @@ export default function ResourcesPage() {
     setShowCommentBox(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
+  const toggleComments = (postId) => {
+    setShowComments(prev => ({ ...prev, [postId]: !prev[postId] }));
+  };
+
   const handleCommentSubmit = async (e, postId) => {
     e.preventDefault();
 
@@ -78,52 +83,54 @@ export default function ResourcesPage() {
 
   return (
     <>
-      <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange} />
+      <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange} className="border rounded-md p-2 mb-4" />
       {categories.map(category => (
-        <button className="black-button" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
+        <button className="black-button m-2" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
       ))}
 
       {/* Contribute Modal Section */}
-      <div className="modal-section">
-        <h2>Contribute</h2>
+      <div className="modal-section my-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Contribute</h2>
         <ContributeModal />
       </div>
 
       {/* PostForm Section */}
-      <div className="post-form-section">
-        <h2>Create Post</h2>
+      <div className="post-form-section my-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Create Post</h2>
         <PostForm onSubmit={handlePostSubmit} />
       </div>
 
       {/* Display Posts */}
-      <div className="posts-section">
-        <h2>Posts SECTION-----------------------------------------------------</h2>
+      <div className="posts-section my-6">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Posts</h2>
         {filteredData.posts.map(post => (
-          <div key={post.id}>
+          <div key={post.id} className="border rounded-lg p-4 mb-4 shadow-sm">
             <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
-            <p>{post.body}</p>
-            <button onClick={() => toggleCommentBox(post.id)}>Add Comment</button>
+            <p className="text-gray-700">{post.body}</p>
+            <button onClick={() => toggleCommentBox(post.id)} className="black-button mt-2 mr-2">Add Comment</button>
             {showCommentBox[post.id] && (
-              <form onSubmit={(e) => handleCommentSubmit(e, post.id)}>
-                <textarea value={commentText} onChange={(e) => setCommentText(e.target.value)} />
-                <button type="submit">Submit</button>
+              <form onSubmit={(e) => handleCommentSubmit(e, post.id)} className="mt-2">
+                <textarea value={commentText} onChange={(e) => setCommentText(e.target.value)} className="border rounded-md p-2 w-full mb-2" />
+                <button type="submit" className="black-button">Submit</button>
               </form>
             )}
-            {/* Display Comments */}
-            {post.comments && post.comments.map((comment, index) => (
-              <p key={index}>{comment.body}</p>
+            <button onClick={() => toggleComments(post.id)} className="black-button mt-2">
+              {showComments[post.id] ? 'Hide Comments' : 'Show Comments'}
+            </button>
+            {showComments[post.id] && post.comments && post.comments.map((comment, index) => (
+              <p key={index} className="text-gray-700 mt-2">{comment.body}</p>
             ))}
           </div>
         ))}
       </div>
 
       {/* Display Resources */}
-      <div className="resources-section">
-        <h2>Resources SECTION-----------------------------------------------------</h2>
+      <div className="resources-section my-6">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Resources</h2>
         {filteredData.resources.map(resource => (
-          <div key={resource.id}>
+          <div key={resource.id} className="border rounded-lg p-4 mb-4 shadow-sm">
             <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
-            <p>{resource.description}</p>
+            <p className="text-gray-700">{resource.description}</p>
           </div>
         ))}
       </div>
