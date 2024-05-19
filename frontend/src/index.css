@@ -74,7 +74,7 @@ form {
   background-color: #d4002f
 }
 
-.black-button {
+/* .black-button {
   display: inline-block;
   padding: 10px 20px;
   text-decoration: none;
@@ -82,11 +82,11 @@ form {
   background-color: var(--primary-gray);
   border-radius: 10px;
   transition: background-color 0.3s ease;
-}
+} */
 
-.black-button:hover {
+/* .black-button:hover {
   background-color: #434343
-}
+} */
 
 .hero-section {
   display: flex;
