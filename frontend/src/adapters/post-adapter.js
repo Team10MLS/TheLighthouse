@@ -1,4 +1,4 @@
-import { fetchHandler, getPostOptions, getPatchOptions } from "../utils";
+import { fetchHandler, getPostOptions, getPatchOptions, getUsersName } from "../utils";
 
 const baseUrl = '/api';
 
