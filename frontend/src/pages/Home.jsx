@@ -3,6 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/current-user-context";
+import logo from "../pictures/main-logo-black-transparent.png";
 
 export default function Home() {
   const { currentUser } = useContext(CurrentUserContext);
@@ -17,17 +18,13 @@ export default function Home() {
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+          className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 h-16"
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
+              <img className="h-40 w-auto" src={logo} alt="" />
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -180,11 +177,11 @@ export default function Home() {
                     Helping you to help others.
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                    Just as a lighthouse illuminates a path, we wish to serve as a beacon for
-                    organizations and advocates of those experiencing or at risk
-                    of homelessness, connecting them with vital resources and
-                    information they can pass on to those in need. Join our
-                    mission today.
+                    Just as a lighthouse illuminates a path, we wish to serve as
+                    a beacon for organizations and advocates of those
+                    experiencing or at risk of homelessness, connecting them
+                    with vital resources and information they can pass on to
+                    those in need. Join our mission today.
                   </p>
                   <div className="mt-10 flex items-center gap-x-6">
                     {!currentUser && (
