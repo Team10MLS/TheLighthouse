@@ -65,7 +65,7 @@ form {
   padding: 10px 20px;
   text-decoration: none;
   color: #fff;
-  background-color: var(--secondary-red);
+  background-color: rgb(255, 60, 60);
   border-radius: 20px;
   transition: background-color 0.3s ease;
 }
@@ -74,19 +74,19 @@ form {
   background-color: #d4002f
 }
 
-/* .black-button {
+.black-button {
   display: inline-block;
   padding: 10px 20px;
   text-decoration: none;
   color: #fff;
-  background-color: var(--primary-gray);
+  background-color: rgb(38, 38, 38);
   border-radius: 10px;
   transition: background-color 0.3s ease;
-} */
+}
 
-/* .black-button:hover {
+.black-button:hover {
   background-color: #434343
-} */
+} 
 
 .hero-section {
   display: flex;
