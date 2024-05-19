@@ -14,9 +14,9 @@ export default function ContributeModal() {
       const orgs = await getAllOrganizations();
       setOrganizations(orgs);
     };
-  
+
     fetchOrganizations();
-  }, []); 
+  }, []);
 
   const handleFieldChange = (e) => {
     setFormFields({ ...formFields, [e.target.name]: e.target.value });

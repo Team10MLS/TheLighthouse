@@ -32,19 +32,33 @@ export default function UserPage() {
   if (!userProfile && !errorText) return null;
   if (errorText) return <p>{errorText}</p>;
 
-  // What parts of state would change if we altered our currentUser context?
-  // Ideally, this would update if we mutated it
-  // But we also have to consider that we may NOT be on the current users page
   const profileUsername = isCurrentUserProfile ? currentUser.username : userProfile.username;
 
-  return <>
-    <h1>{profileUsername}</h1>
-    {!!isCurrentUserProfile && <button onClick={handleLogout}>Log Out</button>}
-    <p>If the user had any data, here it would be</p>
-    <p>Fake Bio or something</p>
-    {
-      !!isCurrentUserProfile
-      && <UpdateUsernameForm currentUser={currentUser} setCurrentUser={setCurrentUser} />
-    }
-  </>;
+  return (
+    <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 className="profile-username">
+          {profileUsername}
+        </h2>
+      </div>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+        <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+          {!!isCurrentUserProfile && (
+            <>
+              <UpdateUsernameForm
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+              />
+              <button
+                onClick={handleLogout}
+                className="mt-6 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Log Out
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
