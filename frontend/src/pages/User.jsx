@@ -36,11 +36,11 @@ export default function UserPage() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+      {/* <div className="sm:mx-auto sm:w-full sm:max-w-md"> Random text string of the users name, maybe we can center this later
         <h2 className="profile-username">
           {profileUsername}
         </h2>
-      </div>
+      </div> */}
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
           {!!isCurrentUserProfile && (
