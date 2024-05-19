@@ -83,7 +83,7 @@ export default function ResourcesPage() {
 
   return (
     <>
-      <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange} className="border rounded-md p-2 mb-4" />
+      <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange} className="border rounded-md p-2 mb-4 mt-20" />
       {categories.map(category => (
         <button className="black-button m-2" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
       ))}
