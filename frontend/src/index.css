@@ -2,14 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-:root {
-  --primary-gray: #282828;
-  --secondary-red: #ff0044;
-  --tertiary-color: #0056b3;
-  --text-color: #FFF;
-  --background-color: #222222;
-}
-
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   margin: 0;
@@ -25,7 +17,7 @@ input {
   margin-bottom: 1rem;
 }
 
-
+/* 
 header {
   display: flex;
   justify-content: space-between;
@@ -52,7 +44,7 @@ nav ul {
 nav a {
   display: block;
   color: #FFF;
-}
+} */
 
 form {
   padding: 1rem;

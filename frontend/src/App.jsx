@@ -18,7 +18,8 @@ export default function App() {
   }, [setCurrentUser]);
 
   return <>
-    <SiteHeadingAndNav />
+  {/* I added this conditional statement to not show this nav component on home page, since home has it's own styled nav */}
+    {location.pathname !== '/' && <SiteHeadingAndNav />}
     <main>
       <Routes>
         <Route path='/' element={<Home />} />
