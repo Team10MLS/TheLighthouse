@@ -25,6 +25,7 @@ export default function ResourcesPage() {
   };
 
   const handleCategoryClick = async (category) => {
+    setSelectedCategory(category);
     const resources = await getAllResourcesByCategory(category);
     setData({ ...data, resources });
   };
@@ -100,40 +101,18 @@ export default function ResourcesPage() {
         <PostForm onSubmit={handlePostSubmit} />
       </div>
 
-      {/* Display Posts */}
-      <div className="posts-section my-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Posts</h2>
-        {filteredData.posts.map(post => (
-          <div key={post.id} className="border rounded-lg p-4 mb-4 shadow-sm">
-            <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
-            <p className="text-gray-700">{post.body}</p>
-            <button onClick={() => toggleCommentBox(post.id)} className="black-button mt-2 mr-2">Add Comment</button>
-            {showCommentBox[post.id] && (
-              <form onSubmit={(e) => handleCommentSubmit(e, post.id)} className="mt-2">
-                <textarea value={commentText} onChange={(e) => setCommentText(e.target.value)} className="border rounded-md p-2 w-full mb-2" />
-                <button type="submit" className="black-button">Submit</button>
-              </form>
-            )}
-            <button onClick={() => toggleComments(post.id)} className="black-button mt-2">
-              {showComments[post.id] ? 'Hide Comments' : 'Show Comments'}
-            </button>
-            {showComments[post.id] && post.comments && post.comments.map((comment, index) => (
-              <p key={index} className="text-gray-700 mt-2">{comment.body}</p>
-            ))}
-          </div>
-        ))}
-      </div>
-
-      {/* Display Resources */}
-      <div className="resources-section my-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Resources</h2>
-        {filteredData.resources.map(resource => (
-          <div key={resource.id} className="border rounded-lg p-4 mb-4 shadow-sm">
-            <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
-            <p className="text-gray-700">{resource.description}</p>
-          </div>
-        ))}
-      </div>
+      {filteredData.posts.map(post => (
+        <div key={post.id}>
+          <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
+          <p>{post.body}</p>
+        </div>
+      ))}
+      {filteredData.resources.map(resource => (
+        <div key={resource.id}>
+          <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
+          <p>{resource.description}</p>
+        </div>
+      ))}
     </>
   );
 }
