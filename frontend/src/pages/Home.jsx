@@ -14,7 +14,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-white">
+    <div className="bg-">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
           className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
