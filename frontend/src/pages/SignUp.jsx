@@ -23,7 +23,7 @@ export default function SignUpPage() {
   // const [formData, setFormData] = useState({ username: '', password: '' });
   // What would be the pros and cons of that?
 
- 
+
   if (currentUser) return <Navigate to="/" />;
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function SignUpPage() {
   const handleNewOrgSubmit = async () => {
     const [newOrg, error] = await createOrganization({ name: newOrgName });
     if (error) return setErrorText(error.message);
-  
+
     setOrganizations([...organizations, newOrg]);
     setOrganizationId(newOrg.id);
     setIsCreatingOrg(false);
@@ -54,7 +54,7 @@ export default function SignUpPage() {
     if (error) return setErrorText(error.message);
 
     setCurrentUser(user);
-    navigate('/They');
+    navigate(`/users/${user.id}`);
   };
 
   const handleChange = (event) => {
@@ -69,7 +69,7 @@ export default function SignUpPage() {
     <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <img
-          // If we have a logo, we can use it here
+        // If we have a logo, we can use it here
         />
         <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign up for an account
