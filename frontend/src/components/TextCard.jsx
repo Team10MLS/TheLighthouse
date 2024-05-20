@@ -1,12 +1,13 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { XMarkIcon, EllipsisVerticalIcon, PencilIcon } from "@heroicons/react/20/solid";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function TextCard({ avatarUrl, username, title, body, children, organizationName, postId, handleDelete }) {
+export default function TextCard({showMenu, avatarUrl, username, title, body, children, organizationName, postId, handleDelete }) {
   return (
     <div className="bg-white px-4 py-5 sm:px-6">
       <div className="flex space-x-3">
@@ -28,6 +29,7 @@ export default function TextCard({ avatarUrl, username, title, body, children, o
           {body && <p className="text-sm text-gray-500">{body}</p>}
         </div>
         <div className="flex flex-shrink-0 self-center">
+          {showMenu && (
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="-m-2 flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600">
@@ -81,6 +83,7 @@ export default function TextCard({ avatarUrl, username, title, body, children, o
               </Menu.Items>
             </Transition>
           </Menu>
+          )}
         </div>
       </div>
     </div>
