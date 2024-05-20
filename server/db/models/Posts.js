@@ -34,14 +34,21 @@ class Posts {
   }
 
   static async listAll() {
-    const query = `SELECT * FROM posts`;
+    const query = `
+      SELECT posts.*, users.username, organizations.name as organization_name
+      FROM posts 
+      INNER JOIN users ON posts.user_id = users.id
+      INNER JOIN organizations ON users.organization_id = organizations.id
+    `;
   
     const { rows } = await knex.raw(query, []);
-    const posts = rows.map((post) => new Posts(post));
-  
-    for (let post of posts) {
-      post.comments = await this.listCommentsForPost(post.id);
-    }
+    const posts = rows.map(post => {
+      const { username, organization_name, ...postFields } = post;
+      const postObj = new Posts(postFields);
+      postObj.username = username;
+      postObj.organizationName = organization_name;
+      return postObj;
+    });
   
     return posts;
   }
