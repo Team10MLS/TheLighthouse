@@ -14,11 +14,12 @@ import {
   createComment,
   listCommentsForPost,
 } from "../adapters/comment-adapter";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ContributeModal from "../components/ContributeModal";
 import { useNavigate } from "react-router-dom";
 import PostForm from "../components/PostForm";
 import TextCard from "../components/TextCard";
+import CurrentUserContext from "../contexts/current-user-context";
 
 const categories = [
   "Shelters",
@@ -30,6 +31,7 @@ const categories = [
 ];
 
 export default function ResourcesPage() {
+  const {currentUser} = useContext(CurrentUserContext);
   const [data, setData] = useState({ posts: [], resources: [] });
   const [searchTerm, setSearchTerm] = useState("");
   const [commentText, setCommentText] = useState("");
@@ -153,6 +155,7 @@ export default function ResourcesPage() {
             isPost={true}
             postId={post.id}
             handleDelete={handleDeletePost}
+            showMenu={currentUser && currentUser.id === post.user_id}
           >
             <button onClick={() => toggleCommentBox(post.id)} className="black-button mt-2 mr-2">
               Add Comment
