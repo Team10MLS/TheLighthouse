@@ -10,7 +10,7 @@ class Posts {
   }
 
   static async create({ user_id, title, body }) {
-    const query = `INSERT INTO posts (user_id,title,body) VALUES (?,?,?) RETURNING *`;
+    const query = `INSERT INTO posts (user_id, title, body) VALUES (?, ?, ?) RETURNING *`;
 
     const { rows } = await knex.raw(query, [user_id, title, body]);
     const post = rows[0];
@@ -26,11 +26,17 @@ class Posts {
   }
 
   static async delete({ id }) {
-    const query = `DELETE FROM posts WHERE id = ? RETURNING *`;
+    // Start a transaction
+    return knex.transaction(async (trx) => {
+      // Delete associated comments
+      await trx.raw('DELETE FROM comments WHERE post_id = ?', [id]);
 
-    const { rows } = await knex.raw(query, [id]);
-    const post = rows[0];
-    return new Posts(post);
+      // Delete the post
+      const query = `DELETE FROM posts WHERE id = ? RETURNING *`;
+      const { rows } = await trx.raw(query, [id]);
+      const post = rows[0];
+      return new Posts(post);
+    });
   }
 
   static async listAll() {
@@ -40,7 +46,7 @@ class Posts {
       INNER JOIN users ON posts.user_id = users.id
       INNER JOIN organizations ON users.organization_id = organizations.id
     `;
-  
+
     const { rows } = await knex.raw(query, []);
     const posts = rows.map(post => {
       const { username, organization_name, ...postFields } = post;
@@ -49,7 +55,7 @@ class Posts {
       postObj.organizationName = organization_name;
       return postObj;
     });
-  
+
     return posts;
   }
 
@@ -59,11 +65,6 @@ class Posts {
     const { rows } = await knex.raw(query, [post_id]);
     return rows.map((comment) => new Comments(comment));
   }
-
 }
-
-
-
-
 
 module.exports = Posts;

@@ -1,16 +1,12 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import {
-  XMarkIcon,
-  EllipsisVerticalIcon,
-  PencilIcon,
-} from "@heroicons/react/20/solid";
+import { XMarkIcon, EllipsisVerticalIcon, PencilIcon } from "@heroicons/react/20/solid";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function TextCard({ avatarUrl, username, title, body, children, organizationName }) {
+export default function TextCard({ avatarUrl, username, title, body, children, organizationName, postId, handleDelete }) {
   return (
     <div className="bg-white px-4 py-5 sm:px-6">
       <div className="flex space-x-3">
@@ -57,16 +53,11 @@ export default function TextCard({ avatarUrl, username, title, body, children, o
                       <a
                         href="#"
                         className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "flex px-4 py-2 text-sm",
+                          active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                          "flex px-4 py-2 text-sm"
                         )}
                       >
-                        <PencilIcon
-                          className="mr-3 h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        <PencilIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
                         <span>Edit</span>
                       </a>
                     )}
@@ -75,17 +66,13 @@ export default function TextCard({ avatarUrl, username, title, body, children, o
                     {({ active }) => (
                       <a
                         href="#"
+                        onClick={() => handleDelete(postId)}
                         className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "flex px-4 py-2 text-sm",
+                          active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                          "flex px-4 py-2 text-sm"
                         )}
                       >
-                        <XMarkIcon
-                          className="mr-3 h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        <XMarkIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
                         <span>Delete</span>
                       </a>
                     )}
