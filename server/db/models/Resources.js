@@ -34,10 +34,21 @@ class Resources {
   }
 
   static async listAll() {
-    const query = `SELECT * FROM resources`;
-
-    const { rows } = await knex.raw(query);
-    return rows.map((resource) => new Resources(resource));
+    const query = `
+      SELECT resources.*, organizations.name as organization_name
+      FROM resources 
+      INNER JOIN organizations ON resources.organization_id = organizations.id
+    `;
+  
+    const { rows } = await knex.raw(query, []);
+    const resources = rows.map(resource => {
+      const { organization_name, ...resourceFields } = resource;
+      const resourceObj = new Resources(resourceFields);
+      resourceObj.organizationName = organization_name;
+      return resourceObj;
+    });
+  
+    return resources;
   }
 
   static async listResourcesForOrganization(organization_id) {

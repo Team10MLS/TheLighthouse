@@ -1,17 +1,38 @@
-import { createResource, updateResource, getAllResources, getAllResourcesByCategory } from "../adapters/resource-adapter";
-import { getAllPostsAndResources, createPost, updatePost, deletePost } from "../adapters/post-adapter";
-import { createComment, listCommentsForPost } from "../adapters/comment-adapter"; // Correct import
+import {
+  createResource,
+  updateResource,
+  getAllResources,
+  getAllResourcesByCategory,
+} from "../adapters/resource-adapter";
+import {
+  getAllPostsAndResources,
+  createPost,
+  updatePost,
+  deletePost,
+} from "../adapters/post-adapter";
+import {
+  createComment,
+  listCommentsForPost,
+} from "../adapters/comment-adapter"; // Correct import
 import { useState, useEffect } from "react";
 import ContributeModal from "../components/ContributeModal";
 import { useNavigate } from "react-router-dom"; // if we need to navigate to category page
 import PostForm from "../components/PostForm";
+import TextCard from "../components/TextCard";
 
-const categories = ['Shelters', 'Food', 'Clothing', 'Medical Services', 'Support Groups', 'Donations & Fundraisings'];
+const categories = [
+  "Shelters",
+  "Food",
+  "Clothing",
+  "Medical Services",
+  "Support Groups",
+  "Donations & Fundraisings",
+];
 
 export default function ResourcesPage() {
   const [data, setData] = useState({ posts: [], resources: [] });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [commentText, setCommentText] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [commentText, setCommentText] = useState("");
   const [showCommentBox, setShowCommentBox] = useState({}); // Track visibility of comment boxes by post ID
   const [showComments, setShowComments] = useState({}); // Track visibility of comments by post ID
 
@@ -20,8 +41,15 @@ export default function ResourcesPage() {
   };
 
   const filteredData = {
-    posts: data.posts.filter(post => post.title.includes(searchTerm) || post.body.includes(searchTerm)),
-    resources: data.resources.filter(resource => resource.name.includes(searchTerm) || resource.description.includes(searchTerm))
+    posts: data.posts.filter(
+      (post) =>
+        post.title.includes(searchTerm) || post.body.includes(searchTerm),
+    ),
+    resources: data.resources.filter(
+      (resource) =>
+        resource.name.includes(searchTerm) ||
+        resource.description.includes(searchTerm),
+    ),
   };
 
   const handleCategoryClick = async (category) => {
@@ -31,12 +59,15 @@ export default function ResourcesPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { post: posts, resource: resources } = await getAllPostsAndResources();
+      const { post: posts, resource: resources } =
+        await getAllPostsAndResources();
       // Fetch comments for each post
-      const postsWithComments = await Promise.all(posts.map(async post => {
-        const comments = await listCommentsForPost(post.id);
-        return { ...post, comments };
-      }));
+      const postsWithComments = await Promise.all(
+        posts.map(async (post) => {
+          const comments = await listCommentsForPost(post.id);
+          return { ...post, comments };
+        }),
+      );
       setData({ posts: postsWithComments, resources });
     };
 
@@ -49,18 +80,18 @@ export default function ResourcesPage() {
     const comments = await listCommentsForPost(newPost.id);
 
     // Update the state to include the new post
-    setData(prevData => ({
+    setData((prevData) => ({
       ...prevData,
-      posts: [...prevData.posts, { ...newPost, comments }]
+      posts: [...prevData.posts, { ...newPost, comments }],
     }));
   };
 
   const toggleCommentBox = (id) => {
-    setShowCommentBox(prev => ({ ...prev, [id]: !prev[id] }));
+    setShowCommentBox((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const toggleComments = (postId) => {
-    setShowComments(prev => ({ ...prev, [postId]: !prev[postId] }));
+    setShowComments((prev) => ({ ...prev, [postId]: !prev[postId] }));
   };
 
   const handleCommentSubmit = async (e, postId) => {
@@ -70,22 +101,36 @@ export default function ResourcesPage() {
     const createdComment = await createComment(newComment);
 
     // Update the local state with the new comment
-    setData(prevData => ({
+    setData((prevData) => ({
       ...prevData,
-      posts: prevData.posts.map(post =>
-        post.id === postId ? { ...post, comments: [...post.comments, createdComment] } : post
-      )
+      posts: prevData.posts.map((post) =>
+        post.id === postId
+          ? { ...post, comments: [...post.comments, createdComment] }
+          : post,
+      ),
     }));
 
-    setCommentText('');
-    setShowCommentBox(prev => ({ ...prev, [postId]: false }));
+    setCommentText("");
+    setShowCommentBox((prev) => ({ ...prev, [postId]: false }));
   };
 
   return (
     <>
-      <input type="text" placeholder="search" value={searchTerm} onChange={handleSearchChange} className="border rounded-md p-2 mb-4 mt-20" />
-      {categories.map(category => (
-        <button className="black-button m-2" key={category} onClick={() => handleCategoryClick(category)}>{category}</button>
+      <input
+        type="text"
+        placeholder="search"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="border rounded-md p-2 mb-4 mt-20"
+      />
+      {categories.map((category) => (
+        <button
+          className="black-button m-2"
+          key={category}
+          onClick={() => handleCategoryClick(category)}
+        >
+          {category}
+        </button>
       ))}
 
       {/* Contribute Modal Section */}
@@ -103,35 +148,64 @@ export default function ResourcesPage() {
       {/* Display Posts */}
       <div className="posts-section my-6">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">Posts</h2>
-        {filteredData.posts.map(post => (
-          <div key={post.id} className="border rounded-lg p-4 mb-4 shadow-sm">
-            <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
-            <p className="text-gray-700">{post.body}</p>
-            <button onClick={() => toggleCommentBox(post.id)} className="black-button mt-2 mr-2">Add Comment</button>
+        {filteredData.posts.map((post) => (
+          <TextCard
+            key={post.id}
+            // avatarUrl={post.user.avatarUrl}
+            username={post.username}
+            organizationName={post.organizationName}
+            title={post.title}
+            body={post.body}
+            isPost={true}
+          >
+            <button
+              onClick={() => toggleCommentBox(post.id)}
+              className="black-button mt-2 mr-2"
+            >
+              Add Comment
+            </button>
             {showCommentBox[post.id] && (
-              <form onSubmit={(e) => handleCommentSubmit(e, post.id)} className="mt-2">
-                <textarea value={commentText} onChange={(e) => setCommentText(e.target.value)} className="border rounded-md p-2 w-full mb-2" />
-                <button type="submit" className="black-button">Submit</button>
+              <form
+                onSubmit={(e) => handleCommentSubmit(e, post.id)}
+                className="mt-2"
+              >
+                <textarea
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  className="border rounded-md p-2 w-full mb-2"
+                />
+                <button type="submit" className="black-button">
+                  Submit
+                </button>
               </form>
             )}
-            <button onClick={() => toggleComments(post.id)} className="black-button mt-2">
-              {showComments[post.id] ? 'Hide Comments' : 'Show Comments'}
+            <button
+              onClick={() => toggleComments(post.id)}
+              className="black-button mt-2"
+            >
+              {showComments[post.id] ? "Hide Comments" : "Show Comments"}
             </button>
-            {showComments[post.id] && post.comments && post.comments.map((comment, index) => (
-              <p key={index} className="text-gray-700 mt-2">{comment.body}</p>
-            ))}
-          </div>
+            {showComments[post.id] &&
+              post.comments &&
+              post.comments.map((comment, index) => (
+                <p key={index} className="text-gray-700 mt-2">
+                  {comment.body}
+                </p>
+              ))}
+          </TextCard>
         ))}
       </div>
 
       {/* Display Resources */}
       <div className="resources-section my-6">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">Resources</h2>
-        {filteredData.resources.map(resource => (
-          <div key={resource.id} className="border rounded-lg p-4 mb-4 shadow-sm">
-            <h2 className="text-2xl font-bold text-gray-900">{resource.name}</h2>
-            <p className="text-gray-700">{resource.description}</p>
-          </div>
+        {filteredData.resources.map((resource) => (
+          <TextCard
+            key={resource.id}
+            title={resource.name}
+            body={resource.description}
+            organizationName={resource.organizationName}
+          />
         ))}
       </div>
     </>
