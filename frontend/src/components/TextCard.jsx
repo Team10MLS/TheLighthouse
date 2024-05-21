@@ -28,6 +28,8 @@ export default function TextCard({ handleTitleChange, handleBodyChange, showMenu
           {organizationName && <p className="text-sm text-gray-500">{organizationName}</p>}
           {title && <p className="text-sm text-gray-500" contentEditable onBlur={(e) => handleTitleChange(e, postId, 'post')}>{title}</p>}
           {body && <p className="text-sm text-gray-500" contentEditable onBlur={(e) => handleBodyChange(e, postId, 'post')}>{body}</p>}
+          {title && <p className="text-sm text-gray-500" contentEditable onBlur={(e) => handleTitleChange(e, postId, 'post')}>{title}</p>}
+          {body && <p className="text-sm text-gray-500" contentEditable onBlur={(e) => handleBodyChange(e, postId, 'post')}>{body}</p>}
         </div>
         <div className="flex flex-shrink-0 self-center">
           {showMenu && (
