@@ -38,6 +38,7 @@ export default function ResourcesPage() {
   const [showCommentBox, setShowCommentBox] = useState({}); // Track visibility of comment boxes by post ID
   const [showComments, setShowComments] = useState({}); // Track visibility of comments by post ID
 
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -113,6 +114,8 @@ export default function ResourcesPage() {
       console.error("Failed to delete post:", error);
     }
   };
+
+
 
   return (
     <div className="relative isolate bg-white">
