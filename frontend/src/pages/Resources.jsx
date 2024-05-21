@@ -40,7 +40,6 @@ export default function ResourcesPage() {
   const [showCommentBox, setShowCommentBox] = useState({}); // Track visibility of comment boxes by post ID
   const [showComments, setShowComments] = useState({}); // Track visibility of comments by post ID
 
-
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -51,7 +50,7 @@ export default function ResourcesPage() {
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 1000);
-  
+
     return () => {
       clearTimeout(timerId);
     };
@@ -65,7 +64,7 @@ export default function ResourcesPage() {
       (resource) => resource.name.includes(debouncedSearchTerm) || resource.description.includes(debouncedSearchTerm)
     ),
   };
-  
+
   const handleCategoryClick = async (category) => {
     const newResources = await getAllResourcesByCategory(category);
     setResources(newResources);
@@ -76,12 +75,12 @@ export default function ResourcesPage() {
       const posts = await getAllPosts();
       setPosts(posts);
     };
-  
+
     const fetchResources = async () => {
       const resources = await getAllResources();
       setResources(resources);
     };
-  
+
     fetchPosts();
     fetchResources();
   }, []);
@@ -124,10 +123,37 @@ export default function ResourcesPage() {
     } catch (error) {
       console.error("Failed to delete post:", error);
     }
-
   };
 
+  const handleTitleChange = async (e, id, type) => {
+    const newTitle = e.target.textContent;
+    if (type === 'post') {
+      console.log(`Updating post with id ${id} to have title ${newTitle}`);
+      const postToUpdate = posts.find((post) => post.id === id);
+      await updatePost({ id, title: newTitle, body: postToUpdate.body });
+      // Update your local state with the updated post
+      setPosts((prevPosts) => (
+        prevPosts.map((post) => post.id === id ? { ...post, title: newTitle } : post)
+      ));
+    } else if (type === 'resource') {
+      // Similar logic for resources
+    }
+  };
 
+  const handleBodyChange = async (e, id, type) => {
+    const newBody = e.target.textContent;
+    if (type === 'post') {
+      console.log(`Updating post with id ${id} to have body ${newBody}`);
+      const postToUpdate = posts.find((post) => post.id === id);
+      await updatePost({ id, title: postToUpdate.title, body: newBody });
+      // Update your local state with the updated post
+      setPosts((prevPosts) => (
+        prevPosts.map((post) => post.id === id ? { ...post, body: newBody } : post)
+      ));
+    } else if (type === 'resource') {
+      // Similar logic for resources
+    }
+  };
 
   return (
     <div className="relative isolate bg-white">
@@ -183,6 +209,8 @@ export default function ResourcesPage() {
             isPost={true}
             postId={post.id}
             handleDelete={handleDeletePost}
+            handleTitleChange={handleTitleChange}
+            handleBodyChange={handleBodyChange}
             showMenu={currentUser && currentUser.id === post.user_id}
           >
             <button onClick={() => toggleCommentBox(post.id)} className="black-button mt-2 mr-2">
