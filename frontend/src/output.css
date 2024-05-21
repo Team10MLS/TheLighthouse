@@ -1775,9 +1775,29 @@ nav a {
 form {
   padding: 1rem;
   border: 1px solid #CCC;
-  width: 15rem;
+  width: 25rem;
   margin: 1rem auto;
 }
+
+.resource-desc {
+  text-align: center;
+  padding: 1rem;
+  max-width: 40%;
+  margin: 0 auto;
+}
+
+.resource-desc p {
+  font-size: 1.125rem;
+  color: #4B5563;
+}
+
+.resource-desc h2 {
+  font-size: 2.25rem; /* This is equivalent to text-4xl in Tailwind */
+  font-weight: bold; /* This is equivalent to font-bold in Tailwind */
+  letter-spacing: -0.025em; /* This is equivalent to tracking-tight in Tailwind */
+  color: #1F2937; /* This is equivalent to text-gray-900 in Tailwind */
+}
+
 
 /* automatically added by NavLink component */
 
