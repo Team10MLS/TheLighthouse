@@ -172,7 +172,7 @@ export default function ResourcesPage() {
       </div>
 
       <div className="resource-desc">
-        <h2>Browse Available Resources </h2>
+        <h2>Browse Available Resources</h2>
         <p>
           This page is a collection of resources and posts that can help you find the resources you
           need. You can filter resources by category, create posts requesting certain resources, and comment on posts.
