@@ -31,7 +31,7 @@ const categories = [
 ];
 
 export default function ResourcesPage() {
-  const {currentUser} = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
   const [data, setData] = useState({ posts: [], resources: [] });
   const [searchTerm, setSearchTerm] = useState("");
   const [commentText, setCommentText] = useState("");
@@ -115,26 +115,31 @@ export default function ResourcesPage() {
   };
 
   return (
-    <>
-      <input
-        type="text"
-        placeholder="search"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        className="border rounded-md p-2 mb-4 mt-20"
-      />
-      {categories.map((category) => (
-        <button
-          className="black-button m-2"
-          key={category}
-          onClick={() => handleCategoryClick(category)}
-        >
-          {category}
-        </button>
-      ))}
+    <div className="relative isolate bg-white">
+      <div className="max-w-2xl mx-auto mt-20 mb-4">
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        />
+      </div>
 
-      <div className="modal-section my-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Contribute</h2>
+      <div className="categories-container mb-6 max-w-2xl mx-auto text-lg font-semibold text-gray-900">
+        {categories.map((category) => (
+          <span
+            key={category}
+            onClick={() => handleCategoryClick(category)}
+            className="category-link cursor-pointer"
+          >
+            {category}
+          </span>
+        ))}
+      </div>
+
+      <div className="modal-section my-6 flex justify-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4"></h2>
         <ContributeModal />
       </div>
 
@@ -197,6 +202,6 @@ export default function ResourcesPage() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

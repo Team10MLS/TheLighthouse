@@ -19,3 +19,7 @@ export const createResource = async ({ organization_id, category, name, descript
 export const updateResource = async ({ id, category, name, description }) => (
   fetchHandler(`${baseUrl}/resources/${id}`, getPostOptions({ category, name, description }))
 );
+
+export const deleteResource = async (id) => (
+  fetchHandler(`${baseUrl}/resources/${id}`, deleteOptions)
+);

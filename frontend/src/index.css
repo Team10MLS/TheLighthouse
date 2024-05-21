@@ -65,7 +65,7 @@ form {
   padding: 10px 20px;
   text-decoration: none;
   color: #fff;
-  background-color: rgb(255, 60, 60);
+  background-color: var(--secondary-red);
   border-radius: 20px;
   transition: background-color 0.3s ease;
 }
@@ -79,14 +79,14 @@ form {
   padding: 10px 20px;
   text-decoration: none;
   color: #fff;
-  background-color: rgb(38, 38, 38);
+  background-color: var(--primary-gray);
   border-radius: 10px;
   transition: background-color 0.3s ease;
 }
 
 .black-button:hover {
   background-color: #434343
-} 
+}
 
 .hero-section {
   display: flex;
