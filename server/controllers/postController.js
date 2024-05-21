@@ -1,11 +1,10 @@
 const Posts = require('../db/models/Posts');
 const Resources = require('../db/models/Resources');
 
-exports.getPostsAndResources = async (req, res) => {
+exports.getPosts = async (req, res) => {
   const post = await Posts.listAll();
-  const resource = await Resources.listAll();
 
-  res.json({ post, resource });
+  res.json(post);
 };
 
 exports.createPost = async (req, res) => {

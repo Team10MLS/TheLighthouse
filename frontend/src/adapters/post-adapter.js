@@ -2,7 +2,7 @@ import { fetchHandler, getPostOptions, getPatchOptions, deleteOptions } from "..
 
 const baseUrl = '/api';
 
-export const getAllPostsAndResources = async () => {
+export const getAllPosts = async () => {
   const [posts] = await fetchHandler(`${baseUrl}/posts`);
   return posts || [];
 };
