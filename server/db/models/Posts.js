@@ -59,6 +59,14 @@ class Posts {
     return posts;
   }
 
+  static async find(id) {
+    const query = `SELECT * FROM posts WHERE id = ?`;
+
+    const { rows } = await knex.raw(query, [id]);
+    const post = rows[0];
+    return post ? new Posts(post) : null;
+  }
+
   static async listCommentsForPost(post_id) {
     const query = `SELECT * FROM comments WHERE post_id = ?`;
 
