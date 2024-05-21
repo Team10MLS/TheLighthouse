@@ -5,7 +5,7 @@ import {
   getAllResourcesByCategory,
 } from "../adapters/resource-adapter";
 import {
-  getAllPostsAndResources,
+  getAllPosts,
   createPost,
   updatePost,
   deletePost,
@@ -32,8 +32,10 @@ const categories = [
 
 export default function ResourcesPage() {
   const { currentUser } = useContext(CurrentUserContext);
-  const [data, setData] = useState({ posts: [], resources: [] });
+  const [posts, setPosts] = useState([]);
+  const [resources, setResources] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [commentText, setCommentText] = useState("");
   const [showCommentBox, setShowCommentBox] = useState({}); // Track visibility of comment boxes by post ID
   const [showComments, setShowComments] = useState({}); // Track visibility of comments by post ID
@@ -42,42 +44,51 @@ export default function ResourcesPage() {
     setSearchTerm(event.target.value);
   };
 
+  // To prevent the search from being triggered on every keystroke, we debounce the search term
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 1000);
+  
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
+
   const filteredData = {
-    posts: data.posts.filter(
-      (post) => post.title.includes(searchTerm) || post.body.includes(searchTerm)
+    posts: posts.filter(
+      (post) => post.title.includes(debouncedSearchTerm) || post.body.includes(debouncedSearchTerm)
     ),
-    resources: data.resources.filter(
-      (resource) => resource.name.includes(searchTerm) || resource.description.includes(searchTerm)
+    resources: resources.filter(
+      (resource) => resource.name.includes(debouncedSearchTerm) || resource.description.includes(debouncedSearchTerm)
     ),
   };
-
+  
   const handleCategoryClick = async (category) => {
-    const resources = await getAllResourcesByCategory(category);
-    setData({ ...data, resources });
+    const newResources = await getAllResourcesByCategory(category);
+    setResources(newResources);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { post: posts, resource: resources } = await getAllPostsAndResources();
-      const postsWithComments = await Promise.all(
-        posts.map(async (post) => {
-          const comments = await listCommentsForPost(post.id);
-          return { ...post, comments };
-        })
-      );
-      setData({ posts: postsWithComments, resources });
+    const fetchPosts = async () => {
+      const posts = await getAllPosts();
+      setPosts(posts);
     };
-
-    fetchData();
+  
+    const fetchResources = async () => {
+      const resources = await getAllResources();
+      setResources(resources);
+    };
+  
+    fetchPosts();
+    fetchResources();
   }, []);
 
   const handlePostSubmit = async (postData) => {
     const newPost = await createPost(postData);
     const comments = await listCommentsForPost(newPost.id);
-    setData((prevData) => ({
-      ...prevData,
-      posts: [...prevData.posts, { ...newPost, comments }],
-    }));
+    setPosts((prevPosts) => [...prevPosts, { ...newPost, comments }]);
   };
 
   const toggleCommentBox = (id) => {
@@ -112,6 +123,7 @@ export default function ResourcesPage() {
     } catch (error) {
       console.error("Failed to delete post:", error);
     }
+
   };
 
   return (
@@ -124,6 +136,14 @@ export default function ResourcesPage() {
           onChange={handleSearchChange}
           className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
+      </div>
+
+      <div className="resource-desc">
+        <h2>Browse Available Resources </h2>
+        <p>
+          This page is a collection of resources and posts that can help you find the resources you
+          need. You can filter resources by category, create posts requesting certain resources, and comment on posts.
+        </p>
       </div>
 
       <div className="categories-container mb-6 max-w-2xl mx-auto text-lg font-semibold text-gray-900">
