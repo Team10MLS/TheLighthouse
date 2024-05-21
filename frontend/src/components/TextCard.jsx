@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function TextCard({ showMenu, avatarUrl, username, title, body, children, organizationName, postId, handleDelete }) {
+export default function TextCard({handleTitleChange, handleBodyChange, showMenu, avatarUrl, username, title, body, children, organizationName, postId, handleDelete }) {
   return (
     <div className="bg-white px-4 py-5 sm:px-6">
       <div className="flex space-x-3">
@@ -26,8 +26,8 @@ export default function TextCard({ showMenu, avatarUrl, username, title, body, c
             </a>
           </p>
           {organizationName && <p className="text-sm text-gray-500">{organizationName}</p>}
-          {title && <p className="text-sm text-gray-500">{title}</p>}
-          {body && <p className="text-sm text-gray-500">{body}</p>}
+          {title && <p className="text-sm text-gray-500" contentEditable onBlur={(e) => handleTitleChange(e, postId, 'post')}>{title}</p>}
+          {body && <p className="text-sm text-gray-500" contentEditable onBlur={(e) => handleBodyChange(e, postId, 'post')}>{body}</p>}
         </div>
         <div className="flex flex-shrink-0 self-center">
           {showMenu && (
