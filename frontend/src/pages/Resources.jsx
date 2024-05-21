@@ -45,12 +45,11 @@ export default function ResourcesPage() {
   };
 
   // To prevent the search from being triggered on every keystroke, we debounce the search term
-
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 1000);
-  
+
     return () => {
       clearTimeout(timerId);
     };
@@ -64,7 +63,7 @@ export default function ResourcesPage() {
       (resource) => resource.name.includes(debouncedSearchTerm) || resource.description.includes(debouncedSearchTerm)
     ),
   };
-  
+
   const handleCategoryClick = async (category) => {
     const newResources = await getAllResourcesByCategory(category);
     setResources(newResources);
@@ -73,14 +72,21 @@ export default function ResourcesPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       const posts = await getAllPosts();
-      setPosts(posts);
+      // Ensure each post has a comments array
+      const postsWithComments = await Promise.all(
+        posts.map(async (post) => {
+          const comments = await listCommentsForPost(post.id);
+          return { ...post, comments };
+        })
+      );
+      setPosts(postsWithComments);
     };
-  
+
     const fetchResources = async () => {
       const resources = await getAllResources();
       setResources(resources);
     };
-  
+
     fetchPosts();
     fetchResources();
   }, []);
@@ -101,14 +107,15 @@ export default function ResourcesPage() {
 
   const handleCommentSubmit = async (e, postId) => {
     e.preventDefault();
-    const newComment = { user_id: 1, body: commentText, post_id: postId };
+    const newComment = { user_id: currentUser.id, body: commentText, post_id: postId }; // Use currentUser.id for user_id
     const createdComment = await createComment(newComment);
-    setData((prevData) => ({
-      ...prevData,
-      posts: prevData.posts.map((post) =>
+
+    // Update the posts state with the new comment
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
         post.id === postId ? { ...post, comments: [...post.comments, createdComment] } : post
-      ),
-    }));
+      )
+    );
     setCommentText("");
     setShowCommentBox((prev) => ({ ...prev, [postId]: false }));
   };
@@ -116,10 +123,7 @@ export default function ResourcesPage() {
   const handleDeletePost = async (postId) => {
     try {
       await deletePost(postId);
-      setData((prevData) => ({
-        ...prevData,
-        posts: prevData.posts.filter((post) => post.id !== postId),
-      }));
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     } catch (error) {
       console.error("Failed to delete post:", error);
     }
@@ -139,7 +143,7 @@ export default function ResourcesPage() {
       // Similar logic for resources
     }
   };
-  
+
   const handleBodyChange = async (e, id, type) => {
     const newBody = e.target.textContent;
     if (type === 'post') {

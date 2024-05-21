@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function TextCard({handleTitleChange, handleBodyChange, showMenu, avatarUrl, username, title, body, children, organizationName, postId, handleDelete }) {
+export default function TextCard({ handleTitleChange, handleBodyChange, showMenu, avatarUrl, username, title, body, children, organizationName, postId, handleDelete }) {
   return (
     <div className="bg-white px-4 py-5 sm:px-6">
       <div className="flex space-x-3">
