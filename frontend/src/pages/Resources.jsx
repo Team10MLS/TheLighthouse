@@ -252,16 +252,20 @@ export default function ResourcesPage() {
               {showComments[post.id] ? "Hide Comments" : "Show Comments"}
             </button>
           </div>
-            {showComments[post.id] &&
-              post.comments &&
-              post.comments.map((comment, index) => (
-                <p key={index} className="text-gray-700 mt-2">
-                  {comment.body}
-                </p>
-              ))}
-          </div>
-        ))}
+          {showComments[post.id] && post.comments && (
+  <div className="flex flex-col">
+    {post.comments.map((comment, index) => (
+      <div key={index} className="border-b border-gray-200 ml-10">
+        <p className="text-gray-700 mt-2">
+          {comment.body}
+        </p>
       </div>
+    ))}
+  </div>
+)}
+</div>
+))}
+</div>
     </div>
   );
 }

@@ -1203,6 +1203,22 @@ select {
   /* Font weight */
 }
 
+.border-b {
+  border-bottom-width: 1px;
+}
+
+.border-gray-200 {
+  border-color: #edf2f7;
+}
+
+.text-gray-700 {
+  color: #4a5568;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 
 
 .max-w-2xl {
