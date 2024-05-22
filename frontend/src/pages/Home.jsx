@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/current-user-context";
 import logo from "../pictures/main-logo-black-transparent.png";
+import MissionStatement from "../components/MissionStatement";
 
 export default function Home() {
   const { currentUser } = useContext(CurrentUserContext);
@@ -192,12 +193,11 @@ export default function Home() {
                         Sign Up
                       </a>
                     )}
-                    <a
-                      href="/about"
-                      className="text-sm font-semibold leading-6 text-gray-900"
+                    <span 
+                    className="text-sm font-semibold leading-6 text-gray-900"
                     >
-                      Our Mission <span aria-hidden="true">→</span>
-                    </a>
+                    Our Mission <span aria-hidden="true">↓</span>
+                    </span>
                   </div>
                 </div>
                 <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
@@ -253,6 +253,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <MissionStatement />
     </div>
   );
 }
