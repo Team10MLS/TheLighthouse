@@ -198,7 +198,7 @@ export default function ResourcesPage() {
       </div>
 
       <div className="resources-section my-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Resources</h2>
+        <h2 className="text-3xl font-bold text-gray-900">Resources</h2>
         {filteredData.resources.map((resource) => (
           <div className="text-card-container">
             <TextCard
@@ -217,7 +217,7 @@ export default function ResourcesPage() {
       </div>
 
       <div className="posts-section my-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Posts</h2>
+        <h2 className="text-3xl font-bold text-gray-900">Posts</h2>
         {filteredData.posts.map((post) => (
           <div key={post.id}>
             <TextCard
