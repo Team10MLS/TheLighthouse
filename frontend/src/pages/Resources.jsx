@@ -204,46 +204,46 @@ export default function ResourcesPage() {
       <div className="posts-section my-6">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">Posts</h2>
         {filteredData.posts.map((post) => (
-  <div key={post.id}>
-    <TextCard
-      username={post.username}
-      organizationName={post.organizationName}
-      title={post.title}
-      body={post.body}
-      isPost={true}
-      postId={post.id}
-      handleDelete={handleDeletePost}
-      handleTitleChange={handleTitleChange}
-      handleBodyChange={handleBodyChange}
-      showMenu={currentUser && currentUser.id === post.user_id}
-    />
-    <button onClick={() => toggleCommentBox(post.id)} className="black-button mt-2 mr-2">
-      Add Comment
-    </button>
-    {showCommentBox[post.id] && (
-      <form onSubmit={(e) => handleCommentSubmit(e, post.id)} className="mt-2">
-        <textarea
-          value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
-          className="border rounded-md p-2 w-full mb-2"
-        />
-        <button type="submit" className="black-button">
-          Submit
-        </button>
-      </form>
-    )}
-    <button onClick={() => toggleComments(post.id)} className="black-button mt-2">
-      {showComments[post.id] ? "Hide Comments" : "Show Comments"}
-    </button>
-    {showComments[post.id] &&
-      post.comments &&
-      post.comments.map((comment, index) => (
-        <p key={index} className="text-gray-700 mt-2">
-          {comment.body}
-        </p>
-      ))}
-  </div>
-))}
+          <div key={post.id}>
+            <TextCard
+              username={post.username}
+              organizationName={post.organizationName}
+              title={post.title}
+              body={post.body}
+              isPost={true}
+              postId={post.id}
+              handleDelete={handleDeletePost}
+              handleTitleChange={handleTitleChange}
+              handleBodyChange={handleBodyChange}
+              showMenu={currentUser && currentUser.id === post.user_id}
+            />
+            <button onClick={() => toggleCommentBox(post.id)} className="black-button mt-2 mr-2">
+              Add Comment
+            </button>
+            {showCommentBox[post.id] && (
+              <form onSubmit={(e) => handleCommentSubmit(e, post.id)} className="mt-2">
+                <textarea
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  className="border rounded-md p-2 w-full mb-2"
+                />
+                <button type="submit" className="black-button">
+                  Submit
+                </button>
+              </form>
+            )}
+            <button onClick={() => toggleComments(post.id)} className="black-button mt-2">
+              {showComments[post.id] ? "Hide Comments" : "Show Comments"}
+            </button>
+            {showComments[post.id] &&
+              post.comments &&
+              post.comments.map((comment, index) => (
+                <p key={index} className="text-gray-700 mt-2">
+                  {comment.body}
+                </p>
+              ))}
+          </div>
+        ))}
       </div>
 
       <div className="resources-section my-6">
