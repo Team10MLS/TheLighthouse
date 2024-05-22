@@ -1803,6 +1803,10 @@ form {
   /* This is equivalent to text-gray-900 in Tailwind */
 }
 
+.search {
+  margin-top: 7rem;
+}
+
 
 /* automatically added by NavLink component */
 
