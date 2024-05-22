@@ -162,7 +162,7 @@ export default function ResourcesPage() {
 
   return (
     <div className="relative isolate bg-white">
-      <div className="max-w-2xl mx-auto mt-20 mb-4">
+      <div className="search max-w-2xl mx-auto mt-20 mb-4">
         <input
           type="text"
           placeholder="Search"
@@ -200,12 +200,14 @@ export default function ResourcesPage() {
       <div className="resources-section my-6">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">Resources</h2>
         {filteredData.resources.map((resource) => (
+          <div className="text-card-container">
           <TextCard
             key={resource.id}
             title={resource.name}
             body={resource.description}
             organizationName={resource.organizationName}
           />
+          </div>
         ))}
       </div>
 
