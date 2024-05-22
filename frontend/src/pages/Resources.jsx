@@ -232,6 +232,7 @@ export default function ResourcesPage() {
               handleBodyChange={handleBodyChange}
               showMenu={currentUser && currentUser.id === post.user_id}
             />
+          <div className="comments-buttons ml-10">
             <button onClick={() => toggleCommentBox(post.id)} className="black-button mt-2 mr-2">
               Add Comment
             </button>
@@ -250,6 +251,7 @@ export default function ResourcesPage() {
             <button onClick={() => toggleComments(post.id)} className="black-button mt-2">
               {showComments[post.id] ? "Hide Comments" : "Show Comments"}
             </button>
+          </div>
             {showComments[post.id] &&
               post.comments &&
               post.comments.map((comment, index) => (

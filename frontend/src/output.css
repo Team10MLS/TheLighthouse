@@ -1807,6 +1807,14 @@ form {
   margin-top: 7rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
+.ml-10 {
+  margin-left: 2.3rem;
+}
+
 
 /* automatically added by NavLink component */
 
