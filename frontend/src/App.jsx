@@ -10,6 +10,7 @@ import { checkForLoggedInUser } from './adapters/auth-adapter';
 import UsersPage from './pages/Users';
 import UserPage from './pages/User';
 import ResourcesPage from './pages/Resources';
+import Footer from './components/Footer';
 
 export default function App() {
   const { setCurrentUser } = useContext(UserContext);
@@ -31,5 +32,6 @@ export default function App() {
         <Route path='/resources' element={<ResourcesPage />} />
       </Routes>
     </main>
+    <Footer />
   </>;
 }
