@@ -21,6 +21,7 @@ import PostForm from "../components/PostForm";
 import TextCard from "../components/TextCard";
 import CurrentUserContext from "../contexts/current-user-context";
 
+
 const categories = [
   "Shelters",
   "Food",
@@ -196,6 +197,18 @@ export default function ResourcesPage() {
         <ContributeModal />
       </div>
 
+      <div className="resources-section my-6">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Resources</h2>
+        {filteredData.resources.map((resource) => (
+          <TextCard
+            key={resource.id}
+            title={resource.name}
+            body={resource.description}
+            organizationName={resource.organizationName}
+          />
+        ))}
+      </div>
+
       <div className="post-form-section my-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Create Post</h2>
         <PostForm onSubmit={handlePostSubmit} />
@@ -244,18 +257,6 @@ export default function ResourcesPage() {
       ))}
   </div>
 ))}
-      </div>
-
-      <div className="resources-section my-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Resources</h2>
-        {filteredData.resources.map((resource) => (
-          <TextCard
-            key={resource.id}
-            title={resource.name}
-            body={resource.description}
-            organizationName={resource.organizationName}
-          />
-        ))}
       </div>
     </div>
   );
