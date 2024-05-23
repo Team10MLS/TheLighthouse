@@ -12,10 +12,14 @@ exports.seed = async function (knex) {
   await knex.raw('ALTER SEQUENCE organizations_id_seq RESTART WITH 1');
 
   await knex('organizations').insert([
-    { name: 'Soup Kitchen' },
-    { name: 'Coat Drive' },
-    { name: 'Care for the Homeless' },
-    { name: 'Grace Church in New York' },
-    { name: 'East River Shelter' },
+    { name: 'Church of St. Nicholas of Toletine' },
+    { name: 'Beth Hark Christian Counseling Center' },
+    { name: 'The Bowery Mission' },
+    { name: 'Coalition for the Homeless' },
+    { name: 'Covenant House' },
+    { name: 'The Doe Fund' },
+    { name: 'Housing Works' },
+    { name: 'Women in Need' },
+    { name: 'BronxWorks' }
   ]);
 };

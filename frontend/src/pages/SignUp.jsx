@@ -102,19 +102,25 @@ export default function SignUpPage() {
                 Organization
               </label>
               <div className="mt-2">
-                <select
-                  id="organization"
-                  name="organization"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={handleChange}
-                  value={organizationId}
-                >
-                  <option value="">Select an organization</option>
-                  <option value="new" onClick={() => setIsCreatingOrg(true)}>Add new organization</option>
-                  {organizations.map((org) => (
-                    <option key={org.id} value={org.id}>{org.name}</option>
-                  ))}
-                </select>
+              <select
+  id="organization"
+  name="organization"
+  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+  onChange={(e) => {
+    if (e.target.value === "new") {
+      setIsCreatingOrg(true);
+    } else {
+      handleChange(e);
+    }
+  }}
+  value={organizationId}
+>
+  <option value="">Select an organization</option>
+  <option value="new">Add new organization</option>
+  {organizations.map((org) => (
+    <option key={org.id} value={org.id}>{org.name}</option>
+  ))}
+</select>
 
                 {isCreatingOrg && (
                   <div className="mt-2">

@@ -1,7 +1,7 @@
 const stats = [
-  { label: 'Transactions every 24 hours', value: '44 million' },
-  { label: 'Assets under holding', value: '$119 trillion' },
-  { label: 'New users annually', value: '46,000' },
+  { label: 'Affordable housing units lost in NYC (1996-2017)', value: '1.1 million' },
+  { label: 'NYC Residents Affected by Homelessness', value: '80,000' },
+  { label: 'Affordable Housing Vacancies', value: '< 1%' },
 ]
 
 export default function MissionStatement() {
@@ -13,9 +13,7 @@ return (
   <div className="mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row">
     <div className="lg:w-full lg:max-w-2xl lg:flex-auto">
       <p className="text-xl leading-8 text-gray-600">
-        Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At arcu, sit dui mi, nibh dui, diam
-        eget aliquam. Quisque id at vitae feugiat egestas ac. Diam nulla orci at in viverra scelerisque eget.
-        Eleifend egestas fringilla sapien. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea autem totam, nisi, recusandae minima doloremque pariatur sint repudiandae accusantium possimus quia. Doloribus corporis sapiente asperiores nesciunt debitis tempora aspernatur deleniti?
+      Our mission is to bridge the communication gap among shelters, food banks, free clinics, and other support organizations to enhance the continuum of care for individuals experiencing or at risk of homelessness, fostering a holistic approach to help them transition out of their situation.
       </p>
       <div className="mt-10 max-w-xl text-base leading-7 text-gray-700">
       </div>

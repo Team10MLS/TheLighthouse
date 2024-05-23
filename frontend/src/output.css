@@ -2057,10 +2057,6 @@ form {
   font-weight: 600;
 }
 
-.category-link:hover {
-  background-color: #ebf4ff;
-  color: #3b49cc;
-}
 
 .modal-section {
   display: flex;
