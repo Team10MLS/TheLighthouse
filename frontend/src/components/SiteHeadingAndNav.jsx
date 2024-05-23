@@ -12,6 +12,7 @@ export default function Home() {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Resources", href: "/resources" },
+    { name: "Posts", href: "/posts" },
   ];
 
   return (

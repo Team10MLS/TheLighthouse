@@ -10,6 +10,7 @@ import { checkForLoggedInUser } from './adapters/auth-adapter';
 import UsersPage from './pages/Users';
 import UserPage from './pages/User';
 import ResourcesPage from './pages/Resources';
+import PostsPage from './pages/Posts';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
         <Route path='/users/:id' element={<UserPage />} />
         <Route path='*' element={<NotFoundPage />} />
         <Route path='/resources' element={<ResourcesPage />} />
+        <Route path='/posts' element={<PostsPage />} />
       </Routes>
     </main>
     <Footer />
