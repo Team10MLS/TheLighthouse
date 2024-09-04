@@ -8,6 +8,10 @@ The Lighthouse is an app that serves as a communication hub that serves to help 
   - __Scrum Master__: Justin Watson
   - __Development Team Members__: teamMember, teamMember
 
+## Screenshots
+![Screenshot of resources page](https://i.imgur.com/ncpGTyJ.png)
+
+![Screenshot of posts page](https://i.imgur.com/8GaAAsa.png)
 ## Table of Contents
 
 1. [Usage](#Usage)
